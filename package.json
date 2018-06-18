@@ -1,0 +1,22 @@
+{
+  "name": "query-money-cli",
+  "version": "1.0.0",
+  "description": "Query stock price",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yocson/QueryMoney_CLI.git"
+  },
+  "author": "Yocson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yocson/QueryMoney_CLI/issues"
+  },
+  "homepage": "https://github.com/yocson/QueryMoney_CLI#readme",
+  "bin": {
+    "querymoney": "./index.js"
+  }
+}
