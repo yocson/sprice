@@ -8,3 +8,6 @@
 5. UI
 6. Publish
 7. Maybe ico
+
+Using commander.js and co-prompt.js.
+Probably I will use inquirer.js later.
