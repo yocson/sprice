@@ -18,5 +18,10 @@
   "homepage": "https://github.com/yocson/QueryMoney_CLI#readme",
   "bin": {
     "querymoney": "./index.js"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.15.1"
   }
 }
