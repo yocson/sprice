@@ -27,6 +27,9 @@ program
   .option('-p --price', 'Query price of compony')
   .option('-c --componey', 'Componey information')
   .action(priceQuery);
+  
+program
+  .command('')
 
 program.parse(process.argv);
 
