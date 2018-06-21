@@ -5,24 +5,28 @@ const program = require("commander"),
       https = require('https'),
       colors = require('colors');
 
+
+function priceQuery(symbol, args) {
+    https.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`, (res) => {
+        // console.log('statusCode:', res.statusCode);
+        if (res.statusCode === 200) {
+            res.on('data', (d) => {
+                console.log(colors.green('Price: '));
+                process.stdout.write(d);
+                console.log('');
+            }); 
+        }
+    }).on('error', (e) => {
+        console.error(e);
+    });
+}
+
 program
   .command('price <symbol>')
   .alias('p')
   .option('-p --price', 'Query price of compony')
   .option('-c --componey', 'Componey information')
-  .action(function(symbol, args){
-    console.log(symbol);
-    https.get(`https://api.iextrading.com/1.0/stock/${symbol}/price`, (res) => {
-        console.log('statusCode:', res.statusCode);
-        res.on('data', (d) => {
-            console.log(colors.green('Price: '));
-            process.stdout.write(d);
-            console.log('');
-        });
-    }).on('error', (e) => {
-        console.error(e);
-    });
-  });
+  .action(priceQuery);
 
 program.parse(process.argv);
 
