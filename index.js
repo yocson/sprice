@@ -5,15 +5,18 @@ const program = require("commander"),
       prompt = require('co-prompt'),
       https = require('https'),
       colors = require('colors'),
-      concatStream = require('concat-stream');
+      chalk = require('chalk'),
+      concatStream = require('concat-stream'),
+      log = console.log;
 
-function fetchContent(url) {
+function fetchContent(url, fun) {
+    let d = undefined;
     https.get(url, (res) => {
         if (res.statusCode === 200) {
             if (res.statusCode === 200) {
                 res.setEncoding('utf8');
                 res.pipe(concatStream((data) => {
-                    console.log(data);
+                    fun(data);
                 }));
             }
         }
@@ -24,41 +27,44 @@ function fetchContent(url) {
 
 function priceQuery(symbol, args) {
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/price`;
-    console.log(colors.green('Price: '));
-    fetchContent(url);
+    log(chalk.green.bold('Company:'), chalk.blue(symbol.toUpperCase()));
+    process.stdout.write(chalk.green.bold('Prices:  '));
+    fetchContent(url, (data) => {
+        log(chalk.green(data));
+    });
 }
 
 function companyQuery(symbol, args) {
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/company`;
-    console.log(colors.green('Company: '));
+    log(colors.green('Company: '));
     fetchContent(url);
 }
 
 function newsQuery(symbol, args) {
     const num = args.number;
-    console.log(num);
+    log(num);
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/news/last/${num}`;
-    console.log(url)
-    console.log(colors.green('News: '));
+    log(url)
+    log(colors.green('News: '));
     fetchContent(url);
 }
 
 function openCloseQuery(symbol, args) {
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/ohlc`;
-    console.log(colors.green('OHLC: '));
+    log(colors.green('OHLC: '));
     fetchContent(url);
 }
 
 function earningsQuery(symbol, args) {
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/earnings`;
-    console.log(colors.green('Earnings: '));
+    log(colors.green('Earnings: '));
     fetchContent(url);
 }
 
 function chartQuery(symbol, args) {
     const timep = args.timeperiod ? args.timeperiod : '';
     const url = `https://api.iextrading.com/1.0/stock/${symbol}/chart/${timep}`;
-    console.log(colors.green('Chart: '));
+    log(colors.green('Chart: '));
     fetchContent(url);
 }
 

@@ -20,9 +20,9 @@
     "querymoney": "./index.js"
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "co": "^4.6.0",
     "co-prompt": "^1.0.0",
-    "color": "^3.0.0",
     "colors": "^1.3.0",
     "commander": "^2.15.1",
     "concat-stream": "^1.6.2",
