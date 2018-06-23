@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const program = require("commander"),
       co = require("co"),
       prompt = require('co-prompt'),
@@ -52,26 +53,31 @@ function earningsQuery(symbol, args) {
 }
 
 program
-  .command('price <symbol>', 'Price')
+  .description('Price')
+  .command('price <symbol>')
   .alias('p')
   .action(priceQuery);
 
 program
-  .command('company <symbol>', 'Company information')
+  .description('Company information')
+  .command('company <symbol>')
   .alias('c')
   .action(companyQuery);
 
 program
-  .command('news <symbol>', 'News for this company')
+  .description('News for this company')
+  .command('news <symbol>')
   .alias('n')
   .action(newsQuery);
 
 program
-  .command('oc <symbol>', 'Open close price')
+  .description('Open close price')
+  .command('oc <symbol>')
   .action(openCloseQuery);
 
 program
-  .command('earnings <symbol>', 'Four most recent reported quarters')
+  .description('Four most recent reported quarters')
+  .command('earnings <symbol>')
   .alias('e')
   .action(earningsQuery);
 
