@@ -32,7 +32,7 @@ function fetchContent(url, fun) {
 function priceQuery(symbol, args) {
     const url = baseURL + `${symbol}/price`;
     log(chalk.green.bold('Company:'), chalk.blue(symbol.toUpperCase()));
-    process.stdout.write(chalk.green.bold('Prices:  '));
+    process.stdout.write(chalk.green.bold('Price:   '));
     fetchContent(url, (data) => {
         log(chalk.green(data));
     });
@@ -72,12 +72,17 @@ function openCloseQuery(symbol, args) {
     // log(colors.green('OHLC: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
-        let options = {
-            keysColor: 'rainbow',
-            dashColor: 'magenta',
-            stringColor: 'white'
-        };
-        log(prettyjson.render(d, options))
+        log(chalk.green.bold.bgBlack('Symbol:'), chalk.blue(symbol.toUpperCase()));
+        log(chalk.green.bold.bgBlack('open:  '), chalk.green(d.open.price));
+        log(chalk.green.bold.bgBlack('close: '), chalk.green(d.close.price));
+        log(chalk.green.bold.bgBlack('high:  '), chalk.green(d.high));
+        log(chalk.green.bold.bgBlack('low:   '), chalk.green(d.low));
+        // let options = {
+        //     keysColor: 'rainbow',
+        //     dashColor: 'magenta',
+        //     stringColor: 'white'
+        // };
+        // log(prettyjson.render(d, options));
     });
 }
 
