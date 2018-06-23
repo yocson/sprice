@@ -52,6 +52,13 @@ function earningsQuery(symbol, args) {
     fetchContent(url);
 }
 
+function chartQuery(symbol, args) {
+    const timep = args.timeperiod ? args.timeperiod : '';
+    const url = `https://api.iextrading.com/1.0/stock/${symbol}/chart/${timep}`;
+    console.log(colors.green('Chart: '));
+    fetchContent(url);
+}
+
 program
   .description('Price')
   .command('price <symbol>')
@@ -61,7 +68,7 @@ program
 program
   .description('Company information')
   .command('company <symbol>')
-  .alias('c')
+  .alias('co')
   .action(companyQuery);
 
 program
@@ -80,6 +87,12 @@ program
   .command('earnings <symbol>')
   .alias('e')
   .action(earningsQuery);
+
+program
+  .command('chart <symbol>')
+  .option('-t --timeperiod <t>', 'choose time period', ('1d'|'1m'|'3m'|'6m'|'1y'|'2y'|'5y'), '')
+  .alias('ch')
+  .action(chartQuery)
 
 program.parse(process.argv);
 
