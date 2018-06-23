@@ -7,7 +7,8 @@ const program = require("commander"),
     colors = require('colors'),
     chalk = require('chalk'),
     concatStream = require('concat-stream'),
-    prettyjson = require('prettyjson');
+    prettyjson = require('prettyjson'),
+    inquirer = require('inquirer');
 
 const log = console.log;
 
@@ -58,12 +59,36 @@ function newsQuery(symbol, args) {
     // log(colors.green('News: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
-        let options = {
-            keysColor: 'rainbow',
-            dashColor: 'magenta',
-            stringColor: 'white'
-        };
-        log(prettyjson.render(d, options))
+        let list = [];
+        d.forEach((news, index) => {
+            // log(chalk.green(index + 1) + ' ' + news.headline.replace(/&apos;/g, '\'') + '(' + chalk.blue.underline(news.url) + ')');
+            let choice = {
+                key: String(index + 1),
+                name: 'news' + index + 1,
+                value: news.url
+            }
+            list.push(choice);
+            // list.push(chalk.green(index + 1) + ' ' + news.headline.replace(/&apos;/g, '\'');
+        })
+        log(list);
+        inquirer
+            .prompt([
+                {
+                    type: 'expand',
+                    name: 'news',
+                    message: 'Here is the latest news',
+                    choices: list,
+                }
+            ])
+            .then(answers => {
+                log(JSON.stringify(answers, null, '  '));
+            });
+        // let options = {
+        //     keysColor: 'rainbow',
+        //     dashColor: 'magenta',
+        //     stringColor: 'white'
+        // };
+        // log(prettyjson.render(d, options))
     });
 }
 
@@ -92,7 +117,7 @@ function earningsQuery(symbol, args) {
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
         let options = {
-            keysColor: 'rainbow',
+            keysColor: 'green',
             dashColor: 'magenta',
             stringColor: 'white'
         };
