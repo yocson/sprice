@@ -99,7 +99,15 @@ function chartQuery(symbol, args) {
     const timep = args.timeperiod ? args.timeperiod : '';
     const url = baseURL + `${symbol}/chart/${timep}`;
     log(colors.green('Chart: '));
-    fetchContent(url);
+    fetchContent(url, (data) => {
+        const d = JSON.parse(data);
+        let options = {
+            keysColor: 'rainbow',
+            dashColor: 'magenta',
+            stringColor: 'white'
+        };
+        log(prettyjson.render(d, options))
+    });
 }
 
 program
