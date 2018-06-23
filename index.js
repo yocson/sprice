@@ -39,20 +39,41 @@ function newsQuery(symbol, args) {
     fetchContent(url);
 }
 
+function openCloseQuery(symbol, args) {
+    const url = `https://api.iextrading.com/1.0/stock/${symbol}/ohlc`;
+    console.log(colors.green('OHLC: '));
+    fetchContent(url);
+}
+
+function earningsQuery(symbol, args) {
+    const url = `https://api.iextrading.com/1.0/stock/${symbol}/earnings`;
+    console.log(colors.green('Earnings: '));
+    fetchContent(url);
+}
+
 program
-  .command('price <symbol>')
+  .command('price <symbol>', 'Price')
   .alias('p')
   .action(priceQuery);
-  
+
 program
-  .command('company <symbol>')
+  .command('company <symbol>', 'Company information')
   .alias('c')
   .action(companyQuery);
 
 program
-  .command('news <symbol>')
+  .command('news <symbol>', 'News for this company')
   .alias('n')
   .action(newsQuery);
+
+program
+  .command('oc <symbol>', 'Open close price')
+  .action(openCloseQuery);
+
+program
+  .command('earnings <symbol>', 'Four most recent reported quarters')
+  .alias('e')
+  .action(earningsQuery);
 
 program.parse(process.argv);
 
