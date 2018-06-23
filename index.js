@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 const program = require("commander"),
-      co = require("co"),
-      prompt = require('co-prompt'),
-      https = require('https'),
-      colors = require('colors'),
-      chalk = require('chalk'),
-      concatStream = require('concat-stream'),
-      log = console.log;
+    co = require("co"),
+    prompt = require('co-prompt'),
+    https = require('https'),
+    colors = require('colors'),
+    chalk = require('chalk'),
+    concatStream = require('concat-stream'),
+    prettyjson = require('prettyjson');
+
+const log = console.log;
 
 const baseURL = 'https://api.iextrading.com/1.0/stock/';
 
@@ -38,29 +40,59 @@ function priceQuery(symbol, args) {
 
 function companyQuery(symbol, args) {
     const url = baseURL + `${symbol}/company`;
-    log(colors.green('Company: '));
-    fetchContent(url);
+    // process.stdout.write(colors.green('Company: '));
+    fetchContent(url, (data) => {
+        const d = JSON.parse(data);
+        let options = {
+            keysColor: 'rainbow',
+            dashColor: 'magenta',
+            stringColor: 'white'
+        };
+        log(prettyjson.render(d, options))
+    });
 }
 
 function newsQuery(symbol, args) {
     const num = args.number;
-    log(num);
     const url = baseURL + `${symbol}/news/last/${num}`;
-    log(url)
-    log(colors.green('News: '));
-    fetchContent(url);
+    // log(colors.green('News: '));
+    fetchContent(url, (data) => {
+        const d = JSON.parse(data);
+        let options = {
+            keysColor: 'rainbow',
+            dashColor: 'magenta',
+            stringColor: 'white'
+        };
+        log(prettyjson.render(d, options))
+    });
 }
 
 function openCloseQuery(symbol, args) {
     const url = baseURL + `${symbol}/ohlc`;
-    log(colors.green('OHLC: '));
-    fetchContent(url);
+    // log(colors.green('OHLC: '));
+    fetchContent(url, (data) => {
+        const d = JSON.parse(data);
+        let options = {
+            keysColor: 'rainbow',
+            dashColor: 'magenta',
+            stringColor: 'white'
+        };
+        log(prettyjson.render(d, options))
+    });
 }
 
 function earningsQuery(symbol, args) {
     const url = baseURL + `${symbol}/earnings`;
     log(colors.green('Earnings: '));
-    fetchContent(url);
+    fetchContent(url, (data) => {
+        const d = JSON.parse(data);
+        let options = {
+            keysColor: 'rainbow',
+            dashColor: 'magenta',
+            stringColor: 'white'
+        };
+        log(prettyjson.render(d, options))
+    });
 }
 
 function chartQuery(symbol, args) {
@@ -71,40 +103,40 @@ function chartQuery(symbol, args) {
 }
 
 program
-  .description('Price')
-  .command('price <symbol>')
-  .alias('p')
-  .action(priceQuery);
+    .description('Price')
+    .command('price <symbol>')
+    .alias('p')
+    .action(priceQuery);
 
 program
-  .description('Company information')
-  .command('company <symbol>')
-  .alias('co')
-  .action(companyQuery);
+    .description('Company information')
+    .command('company <symbol>')
+    .alias('co')
+    .action(companyQuery);
 
 program
-  .description('News for this company')
-  .command('news <symbol>')
-  .option('-n --number <n>', 'number of news, 1-50', '[1..50]', '10')
-  .alias('n')
-  .action(newsQuery);
+    .description('News for this company')
+    .command('news <symbol>')
+    .option('-n --number <n>', 'number of news, 1-50', '10')
+    .alias('n')
+    .action(newsQuery);
 
 program
-  .description('Open close price')
-  .command('oc <symbol>')
-  .action(openCloseQuery);
+    .description('Open close price')
+    .command('oc <symbol>')
+    .action(openCloseQuery);
 
 program
-  .description('Four most recent reported quarters')
-  .command('earnings <symbol>')
-  .alias('e')
-  .action(earningsQuery);
+    .description('Four most recent reported quarters')
+    .command('earnings <symbol>')
+    .alias('e')
+    .action(earningsQuery);
 
 program
-  .command('chart <symbol>')
-  .option('-t --timeperiod <t>', 'choose time period', ('1d'|'1m'|'3m'|'6m'|'1y'|'2y'|'5y'), '')
-  .alias('ch')
-  .action(chartQuery)
+    .command('chart <symbol>')
+    .option('-t --timeperiod <t>', 'choose time period', ('1d' | '1m' | '3m' | '6m' | '1y' | '2y' | '5y'), '')
+    .alias('ch')
+    .action(chartQuery)
 
 program.parse(process.argv);
 
