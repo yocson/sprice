@@ -9,6 +9,8 @@ const program = require("commander"),
       concatStream = require('concat-stream'),
       log = console.log;
 
+const baseURL = 'https://api.iextrading.com/1.0/stock/';
+
 function fetchContent(url, fun) {
     let d = undefined;
     https.get(url, (res) => {
@@ -26,7 +28,7 @@ function fetchContent(url, fun) {
 }
 
 function priceQuery(symbol, args) {
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/price`;
+    const url = baseURL + `${symbol}/price`;
     log(chalk.green.bold('Company:'), chalk.blue(symbol.toUpperCase()));
     process.stdout.write(chalk.green.bold('Prices:  '));
     fetchContent(url, (data) => {
@@ -35,7 +37,7 @@ function priceQuery(symbol, args) {
 }
 
 function companyQuery(symbol, args) {
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/company`;
+    const url = baseURL + `${symbol}/company`;
     log(colors.green('Company: '));
     fetchContent(url);
 }
@@ -43,27 +45,27 @@ function companyQuery(symbol, args) {
 function newsQuery(symbol, args) {
     const num = args.number;
     log(num);
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/news/last/${num}`;
+    const url = baseURL + `${symbol}/news/last/${num}`;
     log(url)
     log(colors.green('News: '));
     fetchContent(url);
 }
 
 function openCloseQuery(symbol, args) {
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/ohlc`;
+    const url = baseURL + `${symbol}/ohlc`;
     log(colors.green('OHLC: '));
     fetchContent(url);
 }
 
 function earningsQuery(symbol, args) {
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/earnings`;
+    const url = baseURL + `${symbol}/earnings`;
     log(colors.green('Earnings: '));
     fetchContent(url);
 }
 
 function chartQuery(symbol, args) {
     const timep = args.timeperiod ? args.timeperiod : '';
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/chart/${timep}`;
+    const url = baseURL + `${symbol}/chart/${timep}`;
     log(colors.green('Chart: '));
     fetchContent(url);
 }
