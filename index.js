@@ -35,7 +35,10 @@ function companyQuery(symbol, args) {
 }
 
 function newsQuery(symbol, args) {
-    const url = `https://api.iextrading.com/1.0/stock/${symbol}/news`;
+    const num = args.number;
+    console.log(num);
+    const url = `https://api.iextrading.com/1.0/stock/${symbol}/news/last/${num}`;
+    console.log(url)
     console.log(colors.green('News: '));
     fetchContent(url);
 }
@@ -74,6 +77,7 @@ program
 program
   .description('News for this company')
   .command('news <symbol>')
+  .option('-n --number <n>', 'number of news, 1-50', '[1..50]', '10')
   .alias('n')
   .action(newsQuery);
 
