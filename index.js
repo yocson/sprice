@@ -83,18 +83,11 @@ function newsQuery(symbol, args) {
                 opn(newURL, wait = 'false');
                 process.exit();
             });
-        // let options = {
-        //     keysColor: 'rainbow',
-        //     dashColor: 'magenta',
-        //     stringColor: 'white'
-        // };
-        // log(prettyjson.render(d, options))
     });
 }
 
 function openCloseQuery(symbol, args) {
     const url = baseURL + `${symbol}/ohlc`;
-    // log(colors.green('OHLC: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
         log(chalk.green.bold.bgBlack('Symbol:'), chalk.blue(symbol.toUpperCase()));
@@ -102,18 +95,11 @@ function openCloseQuery(symbol, args) {
         log(chalk.green.bold.bgBlack('close: '), chalk.green(d.close.price));
         log(chalk.green.bold.bgBlack('high:  '), chalk.green(d.high));
         log(chalk.green.bold.bgBlack('low:   '), chalk.green(d.low));
-        // let options = {
-        //     keysColor: 'rainbow',
-        //     dashColor: 'magenta',
-        //     stringColor: 'white'
-        // };
-        // log(prettyjson.render(d, options));
     });
 }
 
 function earningsQuery(symbol, args) {
     const url = baseURL + `${symbol}/earnings`;
-    log(colors.green('Earnings: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
         let options = {
