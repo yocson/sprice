@@ -1,18 +1,17 @@
 #!/usr/bin/env node
-
+'use strict'
 const program = require("commander"),
-    co = require("co"),
-    prompt = require('co-prompt'),
     https = require('https'),
-    colors = require('colors'),
     chalk = require('chalk'),
+    colors = require('colors'),
+    clc = require('cli-color'),
     concatStream = require('concat-stream'),
     prettyjson = require('prettyjson'),
     inquirer = require('inquirer'),
-    opn = require('opn');
+    opn = require('opn'),
+    clui = require('clui');
 
 const log = console.log;
-
 const baseURL = 'https://api.iextrading.com/1.0/stock/';
 
 function fetchContent(url, fun) {
@@ -114,16 +113,36 @@ function earningsQuery(symbol, args) {
 function chartQuery(symbol, args) {
     const timep = args.timeperiod ? args.timeperiod : '';
     const url = baseURL + `${symbol}/chart/${timep}`;
-    log(colors.green('Chart: '));
     fetchContent(url, (data) => {
-        const d = JSON.parse(data);
-        let options = {
-            keysColor: 'rainbow',
-            dashColor: 'magenta',
-            stringColor: 'white'
-        };
-        log(prettyjson.render(d, options))
+        drawChart();
     });
+}
+
+function drawChart() {
+    let Line = clui.Line,
+        LineBuffer = clui.LineBuffer;
+
+    let outputBuffer = new LineBuffer({
+        x: 0,
+        y: 0,
+        width: 'console',
+        height: 'console'
+    });
+
+    let message = new Line(outputBuffer)
+        .column('Stock Chart', 20, [clc.green])
+        .fill()
+        .store();
+
+    let header = new Line(outputBuffer)
+        .column('Low', 20, [clc.cyan])
+        .column('Close', 20, [clc.cyan])
+        .column('Open', 20, [clc.cyan])
+        .column('High', 11, [clc.cyan])
+        .fill()
+        .store();
+
+    outputBuffer.output();
 }
 
 program
