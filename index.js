@@ -115,11 +115,11 @@ function chartQuery(symbol, args) {
     const url = baseURL + `${symbol}/chart/${timep}`;
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
-        drawChart(d);
+        drawChart(d, symbol);
     });
 }
 
-function drawChart(days) {
+function drawChart(days, symbol) {
     let Line = clui.Line,
         LineBuffer = clui.LineBuffer;
 
@@ -127,11 +127,11 @@ function drawChart(days) {
         x: 0,
         y: 0,
         width: 'console',
-        height: 'console'
+        height: 2000
     });
 
     let message = new Line(outputBuffer)
-        .column('Stock Chart', 20, [clc.green])
+        .column('Stock Chart: ' + symbol.toUpperCase(), 20, [clc.green])
         .fill()
         .store();
 
@@ -148,13 +148,17 @@ function drawChart(days) {
     let line;
     let Gauge = clui.Gauge;
     days.forEach((day) => {
+        let dif = parseFloat(day.close) - parseFloat(day.open);
+        let color = (dif >= 0) ? [clc.green] : [clc.red];
+        let difp = dif / parseFloat(day.open);
+        let difps = ((difp >= 0) ? ('+' + (difp * 100).toFixed(2)) : ((difp * 100).toFixed(2))) + '%';
         line = new Line(outputBuffer)
             .column(day.date + '', 15, [clc.yellow])
             .column(day.low + '', 10)
-            .column(day.close + '', 10)
+            .column(day.close + '', 10, color)
             .column(day.open + '', 10)
             .column(day.high + '', 10)
-            .column(Gauge(Math.abs(parseInt(day.close) - parseInt(day.open)) * 10, 100, 100, 50, 'human'), 100)
+            .column(Gauge(Math.abs(dif) * 20, 60, 60, 50, difps), 100)
             .fill()
             .store();
     });
