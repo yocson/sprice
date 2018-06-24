@@ -114,11 +114,12 @@ function chartQuery(symbol, args) {
     const timep = args.timeperiod ? args.timeperiod : '';
     const url = baseURL + `${symbol}/chart/${timep}`;
     fetchContent(url, (data) => {
-        drawChart();
+        const d = JSON.parse(data);
+        drawChart(d);
     });
 }
 
-function drawChart() {
+function drawChart(days) {
     let Line = clui.Line,
         LineBuffer = clui.LineBuffer;
 
@@ -135,12 +136,28 @@ function drawChart() {
         .store();
 
     let header = new Line(outputBuffer)
-        .column('Low', 20, [clc.cyan])
-        .column('Close', 20, [clc.cyan])
-        .column('Open', 20, [clc.cyan])
-        .column('High', 11, [clc.cyan])
+        .column('Date', 15, [clc.cyan])
+        .column('Low', 10, [clc.cyan])
+        .column('Close', 10, [clc.cyan])
+        .column('Open', 10, [clc.cyan])
+        .column('High', 10, [clc.cyan])
+        .column('Chart', 100, [clc.cyan])
         .fill()
         .store();
+
+    let line;
+    let Gauge = clui.Gauge;
+    days.forEach((day) => {
+        line = new Line(outputBuffer)
+            .column(day.date + '', 15, [clc.yellow])
+            .column(day.low + '', 10)
+            .column(day.close + '', 10)
+            .column(day.open + '', 10)
+            .column(day.high + '', 10)
+            .column(Gauge(Math.abs(parseInt(day.close) - parseInt(day.open)) * 10, 100, 100, 50, 'human'), 100)
+            .fill()
+            .store();
+    });
 
     outputBuffer.output();
 }
