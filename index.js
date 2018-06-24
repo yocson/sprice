@@ -8,7 +8,8 @@ const program = require("commander"),
     chalk = require('chalk'),
     concatStream = require('concat-stream'),
     prettyjson = require('prettyjson'),
-    inquirer = require('inquirer');
+    inquirer = require('inquirer'),
+    opn = require('opn');
 
 const log = console.log;
 
@@ -56,32 +57,31 @@ function companyQuery(symbol, args) {
 function newsQuery(symbol, args) {
     const num = args.number;
     const url = baseURL + `${symbol}/news/last/${num}`;
-    // log(colors.green('News: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
         let list = [];
         d.forEach((news, index) => {
-            // log(chalk.green(index + 1) + ' ' + news.headline.replace(/&apos;/g, '\'') + '(' + chalk.blue.underline(news.url) + ')');
-            let choice = {
-                key: String(index + 1),
-                name: 'news' + index + 1,
-                value: news.url
-            }
-            list.push(choice);
-            // list.push(chalk.green(index + 1) + ' ' + news.headline.replace(/&apos;/g, '\'');
+            list.push(chalk.green(index + 1) + ' ' + news.headline.replace(/&apos;/g, '\''));
         })
-        log(list);
+        list.push(chalk.green('n') + ' ' + 'exit');
         inquirer
             .prompt([
                 {
-                    type: 'expand',
+                    type: 'list',
                     name: 'news',
                     message: 'Here is the latest news',
                     choices: list,
+                    filter: (val) => {
+                        return val[5];
+                    }
                 }
             ])
             .then(answers => {
-                log(JSON.stringify(answers, null, '  '));
+                if (answers.news === 'n') process.exit();
+                newURL = d[answers.news - 1].url;
+                log('The news is opened in your default browser.');
+                opn(newURL, wait = 'false');
+                process.exit();
             });
         // let options = {
         //     keysColor: 'rainbow',
