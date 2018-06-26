@@ -158,7 +158,7 @@ function drawChart(days, symbol) {
             .column(day.close + '', 10, color)
             .column(day.open + '', 10)
             .column(day.high + '', 10)
-            .column(Gauge(Math.abs(dif) * 20, 60, 60, 50, difps), 100)
+            .column(Gauge(Math.abs(dif) * 20, 60, 60, dif >= 0 ? 100 : 0, difps), 100)
             .fill()
             .store();
     });
