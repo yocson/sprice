@@ -1,5 +1,5 @@
 {
-  "name": "query-money-cli",
+  "name": "sprice-cli",
   "version": "1.0.0",
   "description": "Query stock price",
   "main": "index.js",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/yocson/QueryMoney_CLI#readme",
   "bin": {
-    "querymoney": "./index.js"
+    "sprice": "./index.js"
   },
   "dependencies": {
     "chalk": "^2.4.1",
