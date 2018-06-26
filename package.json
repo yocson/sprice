@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yocson/QueryMoney_CLI.git"
+    "url": "git+https://github.com/yocson/sprice.git"
   },
   "author": "Yocson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yocson/QueryMoney_CLI/issues"
+    "url": "https://github.com/yocson/sprice/issues"
   },
-  "homepage": "https://github.com/yocson/QueryMoney_CLI#readme",
+  "homepage": "https://github.com/yocson/sprice#readme",
   "bin": {
     "sprice": "./index.js"
   },
