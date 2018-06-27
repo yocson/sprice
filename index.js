@@ -3,7 +3,6 @@
 const program = require("commander"),
     https = require('https'),
     chalk = require('chalk'),
-    colors = require('colors'),
     clc = require('cli-color'),
     concatStream = require('concat-stream'),
     prettyjson = require('prettyjson'),
@@ -41,7 +40,6 @@ function priceQuery(symbol, args) {
 
 function companyQuery(symbol, args) {
     const url = baseURL + `${symbol}/company`;
-    // process.stdout.write(colors.green('Company: '));
     fetchContent(url, (data) => {
         const d = JSON.parse(data);
         let options = {
