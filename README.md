@@ -15,33 +15,33 @@ First time use npm? See [How to install npm](https://www.npmjs.com/get-npm).
 
 ### Current Price
 Get the current price of some company  
-`sprice price|p \<symbol\>`  
+`sprice price|p <symbol>`  
 ![](https://i.loli.net/2018/06/27/5b32e662144dc.jpg)
 
 ### News
 Get the latest news about the company. You can move up and down to see all listed news. Selected one will be opened in the default browser.  
 You can also specify the number of news you want to see by -t. The default number is 10.  
-`sprice news|n \<symbol\> -n [number]`
+`sprice news|n <symbol> -n [number]`
 ![](https://i.loli.net/2018/06/27/5b32e33862d41.jpg)
 
 ### Company
 Get the company information
-`sprice company|co \<symbol\>`  
+`sprice company|co <symbol>`  
 ![](https://i.loli.net/2018/06/27/5b32e356befaf.jpg)
 
 ### Open Close High Low price
 Get today's open/close/high/low price for the company.  
-`sprice oc \<symbol\>`
+`sprice oc <symbol>`
 ![](https://i.loli.net/2018/06/27/5b32e47a02339.jpg)
 
 ### Chart
 Get the chart information of the company. The difference is colored as green or red.  
-`sprice charts|ch \<symbol\>`
+`sprice charts|ch <symbol>`
 ![](https://i.loli.net/2018/06/27/5b32e5e91aae1.jpg)
 
 ### Earnings
 Get the earnings for 4 most recent reported quarters.  
-`sprice earnings|e \<symbol\>`  
+`sprice earnings|e <symbol>`  
 ![](https://i.loli.net/2018/06/27/5b32e4edb8862.jpg)
 
 ## Credit
